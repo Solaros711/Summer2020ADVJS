@@ -81,18 +81,25 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    // var ingredientCount = { "{ingredient name}": 0 };
+    var ingredientCount = {};
 
     /* chain() together map(), flatten() and reduce() */
 
-    var result = _(products).chain()
+    var ingredientCount = _(products).chain()
                                   .map(p => p.ingredients)
                                   .flatten()
-                                  .reduce((ingredientCount, cur) => !(cur in ingredientCount) ? ingredientCount[cur] = 1 : ingredientCount.cur += 1, {} )
+                                  .reduce((ingredientCount, ingredient) => {
+                                    if(ingredient in ingredientCount){
+                                      ingredientCount[ingredient] += 1
+                                    }else{
+                                      ingredientCount[ingredient] = 1
+                                    }
+                                    return ingredientCount 
+                                  }, {} )
+                                  .value()
 
-    console.log(result)
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
